@@ -18,7 +18,12 @@ class App extends Component {
 	}
 
 	setSelectedFolderId = (id) => {
+		console.log('updated state in set');
 		this.setState({ selectedFolderId: id });
+	}
+
+	viewAll = () => {
+		this.setState({selectedFolderId: null});
 	}
 
 	notesToBeDisplayed = () => {
@@ -33,16 +38,23 @@ class App extends Component {
 		</header>
 			<div className='flex-container'>
 				<Route exact path="/"
-				// {component={FolderMenu}}
-			 		render={ () => <FolderMenu folders={this.state.folders} selectedFolderId={this.state.selectedFolderId} />} />
-					 <hr/>
-					<Route exact path="/"
-					// {component={FolderMenu}}
-				 		render={ () =>  <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/>} />
+			 		render={ () => <FolderMenu
+						onFolderClick={this.setSelectedFolderId}
+						folders={this.state.folders}
+						selectedFolderId={this.state.selectedFolderId} />} />
 
-				<Route exact path='/folder/:folder-id'
-					render={ () =>  <div> <FolderMenu /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
-				<Route exact path='/note/:note-id' component={SingleNoteDisplay}/>
+					<Route exact path="/"
+				 		render={ () =>{ if (this.state.selectedFolderId) this.viewAll(); return <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/>}} />
+
+				<Route path='/folder/:folderId'
+					render={ () => <FolderMenu
+						onFolderClick={this.setSelectedFolderId}
+						folders={this.state.folders}
+						selectedFolderId={this.state.selectedFolderId}/>}
+				/>
+				<Route path='/folder' render={ () => <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed} />} />
+
+				<Route path='/note/:noteId' render={({match, history}) => <SingleNoteDisplay match={match} folders={this.state.folders} notes={this.state.notes} goBack={history.goBack}/>} />
 			</div>
     </div>
   	);

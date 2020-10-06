@@ -9,7 +9,7 @@ FolderMenu.defaultProps = {
 export default function FolderMenu (props) {
 
 	const displayFolders = props.folders.map( folder =>
-	<FolderCard key={folder.id} name={folder.name} selected={folder.id === props.selectedFolderId}/>
+	<FolderCard key={folder.id} name={folder.name} folderId={props.folderId} selected={folder.id === props.selectedFolderId}/>
 	);
 
 	return (

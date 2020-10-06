@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 function FolderCard (props){
 
   return (
-    <Link>
-      <input type='radio' checked={props.selected}> 
+    <Link to={props.folderId}>
+      <input type='radio' checked={props.selected}>
         {props.name}
       </input>
     </Link>

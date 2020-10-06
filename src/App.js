@@ -35,6 +35,7 @@ class App extends Component {
 				<Route exact path="/"
 				// {component={FolderMenu}}
 			 		render={ () => <FolderMenu folders={this.state.folders} selectedFolderId={this.state.selectedFolderId} />} />
+					 <hr/>
 					<Route exact path="/"
 					// {component={FolderMenu}}
 				 		render={ () =>  <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/>} />

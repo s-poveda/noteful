@@ -14,7 +14,7 @@ export default function FolderMenu (props) {
 	);
 
 	return (
-		<div className="Folder-menu">
+		<div className="folder-menu">
 		<ul>
 			{displayFolders}
 		</ul>

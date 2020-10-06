@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
+import FolderMenu from './Components/FolderMenu/FolderMenu';
+
 
 class App extends Component {
 	static defaultProps = {
@@ -27,7 +29,7 @@ class App extends Component {
     <div className="App">
 			<Route exact path="/"
 			// {component={FolderMenu}}
-			 	render={ () =>  <div> <FolderMenu /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
+			 	render={ () =>  <div> <FolderMenu folders={this.state.folders} selectedFolderId={this.state.selectedFolderId} /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
 			<Route exact path='/folder/:folder-id'
 				render={ () =>  <div> <FolderMenu /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
 			<Route exact path='/note/:note-id' component={singleNoteDisplay}/>

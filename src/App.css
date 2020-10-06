@@ -11,7 +11,7 @@ hr {
   pointer-events: none;
 }
 
-.flex-container {
+.flex-container { 
 	display: flex;
 }
 

@@ -13,7 +13,7 @@ export default function FolderMenu (props) {
 	);
 
 	return (
-		<div>
+		<div className="FolderMenu">
 			{displayFolders}
 			<button>
 				Add Folder

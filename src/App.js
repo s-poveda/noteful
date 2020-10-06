@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import './App.css';
 import FolderMenu from './Components/FolderMenu/FolderMenu';
-
+import MainDisplay from './Components/MainDisplay/MainDisplay';
+import SingleNoteDisplay from './Components/SingleNoteDisplay/SingleNoteDisplay';
 
 class App extends Component {
 	static defaultProps = {
@@ -27,12 +28,17 @@ class App extends Component {
   render () {
 		return (
     <div className="App">
-			<Route exact path="/"
-			// {component={FolderMenu}}
-			 	render={ () =>  <div> <FolderMenu folders={this.state.folders} selectedFolderId={this.state.selectedFolderId} /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
-			<Route exact path='/folder/:folder-id'
-				render={ () =>  <div> <FolderMenu /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
-			<Route exact path='/note/:note-id' component={singleNoteDisplay}/>
+			<header className="App-header">
+				<Link to="/"><h1>Noteful</h1></Link>
+			</header>
+			<div>
+				<Route exact path="/"
+				// {component={FolderMenu}}
+			 		render={ () =>  <div> <FolderMenu folders={this.state.folders} selectedFolderId={this.state.selectedFolderId} /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
+				<Route exact path='/folder/:folder-id'
+					render={ () =>  <div> <FolderMenu /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
+				<Route exact path='/note/:note-id' component={SingleNoteDisplay}/>
+			</div>
     </div>
   	);
 	}

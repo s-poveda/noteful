@@ -4,10 +4,12 @@ const FOLDER_KEY = 'folder';
 function FolderCard (props){
 
   return (
+		<li>
     <Link to={`/folder/${props.folderId}`}>
 			<input id={`${FOLDER_KEY + props.folderId}`} type='radio' checked={props.selected}/>
     	<label htmlFor={`${FOLDER_KEY + props.folderId}`}>{props.name}</label>
     </Link>
+		</li>
   )
 }
 

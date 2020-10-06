@@ -1,0 +1,8 @@
+.main-display {
+	flex: 3;
+}
+
+.main-display ul {
+	list-style: none;
+	padding: 0;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import NoteCard from '../NoteCard/NoteCard';
+import './MainDisplay.css';
 
 export default function MainDisplay (props) {
 
@@ -7,7 +8,7 @@ export default function MainDisplay (props) {
 	<NoteCard key={note.id} noteId={note.id} name={note.name} modified={note.modified}/>);
 
 	return (
-		<div className="MainDisplay">
+		<div className="main-display">
 			<ul>
 			{displayNotes}
 			</ul>

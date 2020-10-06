@@ -28,13 +28,17 @@ class App extends Component {
   render () {
 		return (
     <div className="App">
-			<header className="App-header">
-				<Link to="/"><h1>Noteful</h1></Link>
-			</header>
-			<div>
+		<header className="App-header">
+			<Link to="/"><h1>Noteful</h1></Link>
+		</header>
+			<div className='flex-container'>
 				<Route exact path="/"
 				// {component={FolderMenu}}
-			 		render={ () =>  <div> <FolderMenu folders={this.state.folders} selectedFolderId={this.state.selectedFolderId} /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
+			 		render={ () => <FolderMenu folders={this.state.folders} selectedFolderId={this.state.selectedFolderId} />} />
+					<Route exact path="/"
+					// {component={FolderMenu}}
+				 		render={ () =>  <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/>} />
+
 				<Route exact path='/folder/:folder-id'
 					render={ () =>  <div> <FolderMenu /> <MainDisplay notesToBeDisplayed={this.notesToBeDisplayed}/> </div>} />
 				<Route exact path='/note/:note-id' component={SingleNoteDisplay}/>

@@ -1,5 +1,6 @@
 import React from 'react';
 import FolderCard from '../FolderCard/FolderCard';
+import './FolderMenu.css';
 
 FolderMenu.defaultProps = {
 	folders: [],
@@ -13,8 +14,10 @@ export default function FolderMenu (props) {
 	);
 
 	return (
-		<div className="FolderMenu">
+		<div className="Folder-menu">
+		<ul>
 			{displayFolders}
+		</ul>
 			<button>
 				Add Folder
 			</button>

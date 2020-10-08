@@ -7,7 +7,7 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import AddFolder from '../AddFolder/AddFolder';
-import Api from '../api';
+import api from '../api';
 import './App.css';
 
 class App extends Component {
@@ -17,7 +17,7 @@ class App extends Component {
     };
 
     componentDidMount() {
-      Api.getNotesAndFolders()
+      api.getNotesAndFolders()
 			.then(({notes, folders}) => {
           this.setState({notes, folders});
       })

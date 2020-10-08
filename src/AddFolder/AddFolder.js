@@ -3,13 +3,13 @@ import './AddFolder.css'
 import ApiContext from '../ApiContext'
 
 class AddFolder extends Component {
-  
-  static contextType = ApiContext
+
+  static contextType = ApiContext;
   state = {
     title: { value: 'sample title' }
   }
 
-    
+
   render() {
 
 
@@ -28,7 +28,7 @@ class AddFolder extends Component {
     </form>
   )
   }
-  
+
 
 }
 

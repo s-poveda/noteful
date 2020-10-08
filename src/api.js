@@ -22,6 +22,42 @@ function getNotesAndFolders () {
 	]).then( ([notesRes, foldersRes]) =>{ return {notes: notesRes, folders: foldersRes } });
 }
 
+function addNote (noteObject) {
+	let body = Object.assign(noteObject, {id: cuid()});
+	body = JSON.stringify(body);
+	return fetchHandler(`${URL}/notes`, {
+		method: 'POST',
+		body
+	});
+}
+
+function deleteNote (id) {
+	return fetchHandler(`${URL}/notes/${id}`, {
+		method: 'DELETE'
+	});
+}
+
+function addFolder (folderObj) {
+	// folderObj.id = cuid();
+	let body = Object.assign(folderObj, { id: cuid() } );
+	body = JSON.stringify(body);
+
+	return fetchHandler(`${URL}/folders`, {
+		method: 'POST',
+		body
+	});
+}
+
+function deleteFolder (id) {
+	return fetchHandler(`${URL}/folders/${id}`,{
+		method: 'DELETE'
+	});
+}
+
 export default {
-	getNotesAndFolders
+	getNotesAndFolders,
+	addNote,
+	deleteNote,
+	addFolder,
+	deleteFolder
 }

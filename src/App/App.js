@@ -7,7 +7,7 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import AddFolder from '../AddFolder/AddFolder';
-import config from '../config';
+import Api from '../api';
 import './App.css';
 
 class App extends Component {
@@ -17,24 +17,13 @@ class App extends Component {
     };
 
     componentDidMount() {
-        Promise.all([
-            fetch(`${config.API_ENDPOINT}/notes`),
-            fetch(`${config.API_ENDPOINT}/folders`)
-        ])
-            .then(([notesRes, foldersRes]) => {
-                if (!notesRes.ok)
-                    return notesRes.json().then(e => Promise.reject(e));
-                if (!foldersRes.ok)
-                    return foldersRes.json().then(e => Promise.reject(e));
-
-                return Promise.all([notesRes.json(), foldersRes.json()]);
-            })
-            .then(([notes, folders]) => {
-                this.setState({notes, folders});
-            })
-            .catch(error => {
-                console.error({error});
-            });
+      Api.getNotesAndFolders()
+			.then(({notes, folders}) => {
+          this.setState({notes, folders});
+      })
+      .catch(error => {
+          console.error({error});
+      });
     }
 
     handleDeleteNote = noteId => {
@@ -43,7 +32,7 @@ class App extends Component {
         });
     };
 
-    
+
 
     renderNavRoutes() {
         return (

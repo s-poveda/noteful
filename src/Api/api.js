@@ -25,7 +25,7 @@ function getNotesAndFolders() {
 function addNote(noteObject) {
 	noteObject.id = cuid();
 	const body = JSON.stringify(noteObject);
-	fetchHandler(URL, {
+	return fetchHandler(URL, {
 		method: 'POST',
 		body
 	});
@@ -33,7 +33,7 @@ function addNote(noteObject) {
 
 function deleteNote (noteId) {
 	if(typeof noteId !== 'string') throw new Error('Please provide a string as a note ID');
-	fetchHandler(URL, {
+	return fetchHandler(URL, {
 		method: 'DELETE',
 		body: noteId
 	});

@@ -7,6 +7,7 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import AddFolder from '../AddFolder/AddFolder';
+import AddNotePage from '../AddNotePage/AddNotePage';
 import api from '../api';
 import cuid from 'cuid';
 import './App.css';
@@ -45,10 +46,12 @@ class App extends Component {
 
     //compound function to call api and update local state with new note
     handleAddNote = note => {
-        /*let tempNote = {title: 'title'};
-        api.addNote(tempNote).then(res => {
-
-        })*/
+				note.id = cuid();
+				api.addNote(note)
+				.then( res => {
+					console.log('added note:', res);
+					this.updateStateOnAddNote(note);
+				});
     }
 
     //update local state with new folder
@@ -82,9 +85,9 @@ class App extends Component {
                         component={NoteListNav}
                     />
                 ))}
-                <Route path="/note/:noteId" component={NotePageNav} />
-                <Route path="/add-folder" component={NotePageNav} />
-                <Route path="/add-note" component={NotePageNav} />
+                <Route exact path="/note/:noteId" component={NotePageNav} />
+                <Route exact path="/add-folder" component={NotePageNav} />
+                <Route exact path="/add-note" component={NotePageNav} />
             </>
         );
     }
@@ -102,6 +105,7 @@ class App extends Component {
                 ))}
                 <Route path="/note/:noteId" component={NotePageMain} />
                 <Route path="/add-folder" component={AddFolder} />
+								<Route path='/add-note' component={AddNotePage} />
             </>
         );
     }
@@ -111,7 +115,8 @@ class App extends Component {
             notes: this.state.notes,
             folders: this.state.folders,
             deleteNote: this.handleDeleteNote,
-            addFolder: this.handleAddFolder
+            addFolder: this.handleAddFolder,
+						addNote: this.handleAddNote
         };
         return (
             <ApiContext.Provider value={value}>

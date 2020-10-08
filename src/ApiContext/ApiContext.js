@@ -4,7 +4,8 @@ const ApiContext = React.createContext({
 	notes: [],
 	folders: [],
 	addNote: () => {},
-	deleteNote: () => {}
+	deleteNote: () => {},
+
 });
 
 ApiContext.displayName = "ApiContext"

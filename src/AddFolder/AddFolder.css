@@ -19,6 +19,13 @@
   width: 300px;
 }
 
+.Noteful-form p, .error {
+  color: pink;
+  font-size: 12px;
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+
 .Noteful-form select {
   height: 33px;
 }

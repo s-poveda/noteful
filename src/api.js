@@ -1,4 +1,4 @@
-import cuid from 'cuid';
+
 
 const URL = 'http://localhost:9090';
 
@@ -28,8 +28,8 @@ function getNotesAndFolders () {
 }
 
 function addNote (noteObject) {
-	let body = Object.assign(noteObject, {id: cuid()});
-	body = JSON.stringify(body);
+	let body = JSON.stringify(noteObject);
+
 	return fetchHandler(`${URL}/notes`, {
 		method: 'POST',
 		headers: { 'content-type': 'application/json'},
@@ -45,9 +45,7 @@ function deleteNote (id) {
 }
 
 function addFolder (folderObj) {
-	// folderObj.id = cuid();
-	let body = Object.assign(folderObj, { id: cuid() } );
-	body = JSON.stringify(body);
+	let body = JSON.stringify(folderObj);
 
 	return fetchHandler(`${URL}/folders`, {
 		method: 'POST',

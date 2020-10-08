@@ -8,6 +8,7 @@ import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import AddFolder from '../AddFolder/AddFolder';
 import api from '../api';
+import cuid from 'cuid';
 import './App.css';
 
 class App extends Component {
@@ -19,6 +20,8 @@ class App extends Component {
     componentDidMount() {
       api.getNotesAndFolders()
 			.then(({notes, folders}) => {
+                console.log('updating state.notes to: ',notes);
+                console.log('updating state.folders to: ',folders)
           this.setState({notes, folders});
       })
       .catch(error => {
@@ -57,11 +60,12 @@ class App extends Component {
     }
 
     //compound function to call api and update local state with new folder
-    handleAddFolder = folder => {
-        let tempFolder = {name: 'title'};
-        api.addFolder(tempFolder).then(res => {
+    handleAddFolder = name => {
+        console.log('added foldername is: ',name);
+        let folder = {name: name, id: cuid()};
+        api.addFolder(folder).then(res => {
             console.log(res);
-            this.updateStateOnAddFolder(tempFolder);
+            this.updateStateOnAddFolder(folder);
         }).catch(er =>{
             console.error(er);
         });

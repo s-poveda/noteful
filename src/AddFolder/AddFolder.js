@@ -23,7 +23,13 @@ class AddFolder extends Component {
       onSubmit={e => { }}
     >
       <label htmlFor='folder-name-input'>New Folder Name:</label>
-      <input type='text' className='field' id='folder-name-input' value={this.state.title.value}/>
+      <input type='text' className='field' id='folder-name-input' value={this.state.title.value} onChange={e => {
+        console.log(e.target.value);
+        this.setState({
+          title: {value: e.target.value}
+        })
+        
+      }}/>
       <button type='submit' className='buttons'>Create Folder</button>
     </form>
   )

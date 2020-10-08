@@ -1,18 +1,8 @@
-
-
 const URL = 'http://localhost:9090';
 
 function fetchHandler (...args) {
-	console.log('args is: ', args)
-
-	/*
-	args[1].headers = args[1].headers
-	? Object.assign(args[1].headers, { 'content-type': 'application/json'})
-	: Object.assign({}, {'content-type': 'application/json'});
-	*/
-
+console.log(args[1]);
 	return fetch(...args).then(res => {
-		console.log('first res:',res);
 		if (!res.ok) {
 			return Promise.reject(res.status);
 		}
@@ -28,6 +18,7 @@ function getNotesAndFolders () {
 }
 
 function addNote (noteObject) {
+	noteObject.modified = new Date();
 	let body = JSON.stringify(noteObject);
 
 	return fetchHandler(`${URL}/notes`, {

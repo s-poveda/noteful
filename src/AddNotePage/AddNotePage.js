@@ -35,7 +35,7 @@ export default class AddNotePage extends Component {
 	}
 
 	validateInfo() {
-		if (this.state.name.value.length != 0) return this.context.folders.some( folder => folder.id === this.state.folderId.value)
+		if (this.state.name.value.length !== 0) return this.context.folders.some( folder => folder.id === this.state.folderId.value)
 		return false
 	}
 

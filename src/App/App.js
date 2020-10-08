@@ -7,7 +7,7 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import AddFolder from '../AddFolder/AddFolder';
-import Api from '../api';
+import api from '../api';
 import './App.css';
 
 class App extends Component {
@@ -17,7 +17,7 @@ class App extends Component {
     };
 
     componentDidMount() {
-      Api.getNotesAndFolders()
+      api.getNotesAndFolders()
 			.then(({notes, folders}) => {
           this.setState({notes, folders});
       })
@@ -32,7 +32,39 @@ class App extends Component {
         });
     };
 
+    //update local state with new note
+    updateStateOnAddNote = note => {
+        let tempNotes = [...this.state.notes, note]
+        this.setState({
+            notes: tempNotes
+        })
+    }
 
+    //compound function to call api and update local state with new note
+    handleAddNote = note => {
+        /*let tempNote = {title: 'title'};
+        api.addNote(tempNote).then(res => {
+
+        })*/
+    }
+
+    //update local state with new folder
+    updateStateOnAddFolder = folder => {
+        let tempFolders = [...this.state.folders, folder]
+        this.setState({
+            notes: tempFolders
+        })
+    }
+
+    //compound function to call api and update local state with new folder
+    handleAddFolder = folder => {
+        let tempFolder = {title: 'title'};
+        api.addFolder(tempFolder).then(res => {
+            console.log(res);
+        }).catch(er =>{
+            console.error(er);
+        });
+    }
 
     renderNavRoutes() {
         return (

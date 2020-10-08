@@ -7,6 +7,7 @@ import NoteListMain from '../NoteListMain/NoteListMain';
 import NotePageMain from '../NotePageMain/NotePageMain';
 import dummyStore from '../dummy-store';
 import ApiContext from '../ApiContext/ApiContext';
+import Api from '../Api/api';
 import './App.css';
 
 class App extends Component {
@@ -17,7 +18,7 @@ class App extends Component {
 
     componentDidMount() {
         // fake date loading from API call
-        setTimeout(() => this.setState({notes: dummyStore.notes, folders: dummyStore.folders}), 500);
+        Api.getNotesAndFolders().then(state => this.setState(state))
     }
 
     renderNavRoutes() {

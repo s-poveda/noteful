@@ -52,15 +52,16 @@ class App extends Component {
     updateStateOnAddFolder = folder => {
         let tempFolders = [...this.state.folders, folder]
         this.setState({
-            notes: tempFolders
+            folders: tempFolders
         })
     }
 
     //compound function to call api and update local state with new folder
     handleAddFolder = folder => {
-        let tempFolder = {title: 'title'};
+        let tempFolder = {name: 'title'};
         api.addFolder(tempFolder).then(res => {
             console.log(res);
+            this.updateStateOnAddFolder(tempFolder);
         }).catch(er =>{
             console.error(er);
         });
@@ -105,7 +106,8 @@ class App extends Component {
         const value = {
             notes: this.state.notes,
             folders: this.state.folders,
-            deleteNote: this.handleDeleteNote
+            deleteNote: this.handleDeleteNote,
+            addFolder: this.handleAddFolder
         };
         return (
             <ApiContext.Provider value={value}>

@@ -54,7 +54,8 @@ export default class AddNotePage extends Component {
 							content: content.value,
 							folderId: folderId.value
 						}
-						addNote(note)
+						addNote(note);
+						this.props.history.goBack();
 					} else {
 						console.log('invalid');
 					}

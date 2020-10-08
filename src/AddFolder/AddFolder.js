@@ -5,22 +5,21 @@ import ApiContext from '../ApiContext'
 class AddFolder extends Component {
   
   static contextType = ApiContext
+
   state = {
     title: { value: 'sample title' }
   }
 
     
   render() {
+    const { addFolder } = this.context
 
-
-    const { className, ...otherProps } = this.props
     return (
     <form
       id='add-folder-form'
-      className={['Noteful-form', className].join(' ')}
+      className='Noteful-form'
       action='#'
-      {...otherProps}
-      onSubmit={e => { }}
+      onSubmit={e => {e.preventDefault(); addFolder()}}
     >
       <label htmlFor='folder-name-input'>New Folder Name:</label>
       <input type='text' className='field' id='folder-name-input' value={this.state.title.value} onChange={e => {
@@ -28,7 +27,7 @@ class AddFolder extends Component {
         this.setState({
           title: {value: e.target.value}
         })
-        
+
       }}/>
       <button type='submit' className='buttons'>Create Folder</button>
     </form>

@@ -1,12 +1,6 @@
 const URL = 'http://localhost:9090';
 
 function fetchHandler (...args) {
-	// if (typeof args[1] !== 'undefined' && args[1] !== null) {
-	// 	args[1] = Object.assign(args[1].headers, { 'content-type': 'application/json'})
-	// }
-	// else {
-	// 	args[1] = Object.assign( {}, { 'content-type': 'application/json'} );
-	// }
 
 	return fetch(...args).then(res => {
 		if (!res.ok) {

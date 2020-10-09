@@ -10,6 +10,8 @@ import './Note.css'
 export default class Note extends React.Component {
   static defaultProps ={
     onDeleteNote: () => {},
+		id: '',
+		name: ''
   }
   static contextType = ApiContext;
 

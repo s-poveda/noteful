@@ -27,8 +27,12 @@ class AddFolder extends Component {
     <form
       id='add-folder-form'
       className='Noteful-form'
-      action='#'
-      onSubmit={e => {e.preventDefault();  addFolder(this.state.title.value); this.props.history.goBack()}}
+      onSubmit={e => {
+				e.preventDefault();
+				const isValid = addFolder(this.state.title.value);
+				if ( !!isValid ) throw new Error('Submission worng')  
+				this.props.history.goBack()}
+			}
     >
       <label htmlFor='folder-name-input'>New Folder Name:
         {getErrors}

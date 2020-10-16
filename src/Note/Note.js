@@ -4,7 +4,7 @@ import { format } from 'date-fns'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import ApiContext from '../ApiContext'
 import config from '../config'
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import './Note.css'
 
 export default class Note extends React.Component {
@@ -42,6 +42,9 @@ export default class Note extends React.Component {
 
   render() {
     const { name, id, modified } = this.props
+	 	if ( !!name === false || !!id === false) {
+	 		throw new Error('invalid note info');
+	 }
     return (
       <div className='Note'>
         <h2 className='Note__title'>
@@ -72,7 +75,7 @@ export default class Note extends React.Component {
   }
 }
 Note.propTypes= {
-	name: propTypes.string.isRequired,
-	id: propTypes.string.isRequired,
-	modified: propTypes.string
+	name: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
+	modified: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
 };

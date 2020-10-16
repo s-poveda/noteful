@@ -1,13 +1,23 @@
 const URL = 'http://localhost:9090';
 
+class ApiError extends Error {
+	constructor(message, code) {
+		super(message);
+		this.fromApi = true;
+	}
+}
+
 function fetchHandler (...args) {
 
 	return fetch(...args).then(res => {
 		if (!res.ok) {
-			return Promise.reject(res.status);
+			throw new ApiError(res.message);
 		}
 		return res.json();
-	}).then(data => data);
+	}).then(data => data)
+	.catch(e => {
+		throw new ApiError(e);
+	});
 }
 
 function getNotesAndFolders () {

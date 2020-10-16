@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ApiContext from '../ApiContext';
 
-export default class AddNotePage extends Component {
+export default class AddNote extends Component {
 	static contextType = ApiContext;
 
 	state = {
@@ -27,40 +27,44 @@ export default class AddNotePage extends Component {
   }
 
 	getFolderErrorMessage() {
-		if(this.state.folderIdIndex.touched) {
-			let message = this.state.folderIdIndex.touched && this.state.folderIdIndex.value.length ? '' : 'please select a folder';
+		if(this.state.folderIdIndex.touched || this.state.folderIdIndex.value === null) {
+			let message = this.state.folderIdIndex.touched && this.state.folderIdIndex.value ? '' : 'please select a folder';
 			return <p className='error'>{message}</p>
 		}
 		return <></>
 	}
 
 	validateInfo() {
-		console.log('folder valid?:', this.context.folders[this.state.folderIdIndex.value]);
-		if (this.state.name.value.length !== 0 && this.context.folders[this.state.folderIdIndex.value]) return true;
+		let [name, folderIdIndex] = [Object.assign({}, this.state.name, {touched: true}), Object.assign({}, this.state.folderIdIndex, {touched: true})];
+		this.setState( { name, folderIdIndex });
+		if (this.state.name.value.length > 0 && this.context.folders[this.state.folderIdIndex.value]) return true;
 		return false;
 	}
 
+	onSubmit = e => {
+		e.preventDefault();
+		if (this.validateInfo()) {
+			const { folders, addNote } = this.context;
+			const {name, content, folderIdIndex } = this.state;
+			const note = {
+				name: name.value,
+				content: content.value,
+				folderId: folders[folderIdIndex.value].id
+			}
+			addNote(note);
+			this.props.history.goBack();
+		} else {
+			console.log('info invalid');
+		}
+	}
+
 	render()  {
-		const { folders, addNote } = this.context;
+		const { folders } = this.context;
 		const [nameError, folderError] = [ this.getNameErrorMessage(), this.getFolderErrorMessage()]
 		return (
 			<form
 	      className='Noteful-form'
-				onSubmit={ e => {
-					e.preventDefault();
-					if (this.validateInfo()) {
-						const {name, content, folderIdIndex } = this.state;
-						const note = {
-							name: name.value,
-							content: content.value,
-							folderId: folders[folderIdIndex.value].id
-						}
-						addNote(note);
-						this.props.history.goBack();
-					} else {
-						console.log('invalid');
-					}
-				}}
+				onSubmit={this.onSubmit}
 			>
 			<label htmlFor='name-input'>Note Name:
 			{nameError}

@@ -8,7 +8,8 @@ import NotePageMain from '../NotePageMain/NotePageMain';
 import ApiContext from '../ApiContext';
 import AddFolder from '../AddFolder/AddFolder';
 import AddNotePage from '../AddNote/AddNote';
-import SubmissionErrorBoundary from '../ErrorBoundaries/SubmissionErrorBoundary/SubmissionErrorBoundary';
+import FolderSubmissionErrorBoundary from '../ErrorBoundaries/FolderSubmissionErrorBoundary/FolderSubmissionErrorBoundary';
+import NoteSubmissionErrorBoundary from '../ErrorBoundaries/NoteSubmissionErrorBoundary/NoteSubmissionErrorBoundary';
 import api from '../api';
 import cuid from 'cuid';
 import './App.css';
@@ -51,9 +52,13 @@ class App extends Component {
     //compound function to call api and update local state with new note
     handleAddNote = note => {
 				note.id = cuid();
-				api.addNote(note)
+				return api.addNote(note)
 				.then( res => {
 					this.updateStateOnAddNote(note);
+					return true;
+				})
+				.catch( e =>{
+					return false;
 				});
     }
 
@@ -68,14 +73,12 @@ class App extends Component {
     //compound function to call api and update local state with new folder
     handleAddFolder = name => {
         let folder = {name: name, id: cuid()};
-        api.addFolder(folder).then(res => {
-            console.log(res);
-            this.updateStateOnAddFolder(folder);
+        return api.addFolder(folder).then(res => {
+          this.updateStateOnAddFolder(folder);
+					return true;
         }).catch(er =>{
-						console.log(er.fromApi);
-            return false;
+          return false;
         });
-				return true;
     }
 
     renderNavRoutes() {
@@ -109,33 +112,41 @@ class App extends Component {
                         component={NoteListMain}
                     />
                 ))}
+
                 <Route path="/note/:noteId" component={NotePageMain} />
 
-								<SubmissionErrorBoundary
-								message='There was an error submitting the new folder. Please try again later'
+								<FolderSubmissionErrorBoundary
+									message='There was an error submitting the new folder. Please try again later'
 								>
-                	<Route path="/add-folder" component={AddFolder} />
-								</SubmissionErrorBoundary>
+									<Route path="/add-folder" component={AddFolder} />
+								</FolderSubmissionErrorBoundary>
 
-								<SubmissionErrorBoundary
-								message='There was an error submitting your new note. Please try again later'
+								<NoteSubmissionErrorBoundary
+									message='There was an error submitting your new note. Please try again later'
 								>
-								<Route path='/add-note' component={AddNotePage} />
-								</SubmissionErrorBoundary>
+									<Route path='/add-note' component={AddNotePage} />
+								</NoteSubmissionErrorBoundary>
             </>
         );
     }
 
 		shouldThrowNetworkError () {
+			console.log('logs network error', this.state.networkError);
 			if (this.state.networkError !== null) throw this.state.networkError;
 		}
+
+		setNotesAndFolders  = (notes, folders) => {
+			this.setState({ notes, folders })
+		}
+
     render() {
+			console.log('main rerender');
       const value = {
         notes: this.state.notes,
         folders: this.state.folders,
         deleteNote: this.handleDeleteNote,
         addFolder: this.handleAddFolder,
-				addNote: this.handleAddNote
+				addNote: this.handleAddNote,
       };
 
 			this.shouldThrowNetworkError();

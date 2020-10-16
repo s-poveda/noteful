@@ -15,7 +15,8 @@ export default class AddNote extends Component {
 		folderIdIndex: {
 			value: null,
 			touched: false
-		}
+		},
+		submitError: false
 	}
 
 	getNameErrorMessage() {
@@ -51,14 +52,28 @@ export default class AddNote extends Component {
 				content: content.value,
 				folderId: folders[folderIdIndex.value].id
 			}
-			addNote(note);
-			this.props.history.goBack();
-		} else {
-			console.log('info invalid');
+			addNote(note)
+			.then( success =>{
+				console.log('swucc',success);
+				if (!success){
+					this.setState({ submitError: true })
+				} else {
+					this.props.history.goBack();
+				}
+			});
 		}
 	}
 
+	shouldComponentUpdate (nextProps, nextState) {
+		if (nextState.submitError) {
+			throw new Error('Submission Problem');
+		}
+		return true;
+	}
+
 	render()  {
+		this.shouldThrowSubmitError();
+
 		const { folders } = this.context;
 		const [nameError, folderError] = [ this.getNameErrorMessage(), this.getFolderErrorMessage()]
 		return (
@@ -66,6 +81,8 @@ export default class AddNote extends Component {
 	      className='Noteful-form'
 				onSubmit={this.onSubmit}
 			>
+			<button onClick={this.shouldThrowSubmitError} />
+
 			<label htmlFor='name-input'>Note Name:
 			{nameError}
 			</label>

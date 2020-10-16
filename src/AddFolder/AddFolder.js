@@ -2,12 +2,18 @@ import React, { Component } from 'react'
 import './AddFolder.css'
 import ApiContext from '../ApiContext'
 
+import FolderSubmissionErrorBoundary from '../ErrorBoundaries/FolderSubmissionErrorBoundary/FolderSubmissionErrorBoundary';
+
+
 class AddFolder extends Component {
 
   static contextType = ApiContext
 
   state = {
-    title: { value: 'sample title' , touched: false}
+    title: { value: 'sample title' ,
+		touched: false
+		},
+		submitError: false
   }
 
   getErrorMessage() {
@@ -15,8 +21,15 @@ class AddFolder extends Component {
       let message = this.state.title.value.length ? "" : "please enter a folder name";
       return <p className='error'>{message}</p>
     }
-    return <></>
+    return <p></p>
   }
+
+	shouldComponentUpdate (nextProps, nextState) {
+		if (nextState.submitError) {
+			throw new Error('Submission Problem');
+		}
+		return true;
+	}
 
   render() {
     const { addFolder } = this.context
@@ -24,14 +37,18 @@ class AddFolder extends Component {
 
 
     return (
-    <form
+		<form
       id='add-folder-form'
       className='Noteful-form'
       onSubmit={e => {
 				e.preventDefault();
 				const isValid = addFolder(this.state.title.value);
-				if ( !!isValid ) throw new Error('Submission worng')  
-				this.props.history.goBack()}
+				if ( !!isValid ) {
+					this.setState({ submitError: true })
+				} else {
+					this.props.history.goBack();
+				}
+			}
 			}
     >
       <label htmlFor='folder-name-input'>New Folder Name:

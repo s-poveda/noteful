@@ -1,21 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class NoteErrorBoundary extends React.Component {
+export default class NoteSubmissionErrorBoundary extends React.Component {
 	state = { error: false }
 
 	static getDerivedStateFromError (error) {
 		return { error : true }
 	}
 
+	componentDidUpdate(previousProps) {
+    if (previousProps.children!==this.props.children)
+        this.setState({error: false});
+		}
+
 	render () {
-		console.log('sub bound:', this.state);
 			if (this.state.error === true ) {
 				return (
-					<div className='Noteful-form'>
+					<div className='Error__main'>
 							<h2 className=''>
 							{this.props.message}
 							</h2>
+							<p>Return to the <a href='/'>Homescreen</a></p>
 					</div>
 				);
 			}
@@ -23,7 +28,7 @@ export default class NoteErrorBoundary extends React.Component {
 	}
 }
 
-NoteErrorBoundary.propTypes = {
+NoteSubmissionErrorBoundary.propTypes = {
 	message: PropTypes.string,
 	children: PropTypes.object
 }

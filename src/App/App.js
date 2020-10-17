@@ -25,11 +25,7 @@ class App extends Component {
 
     componentDidMount() {
       api.getNotesAndFolders()
-			.then(({notes, folders}) => {
-          console.log('updating state.notes to: ',notes);
-          console.log('updating state.folders to: ',folders)
-          this.setState({notes, folders});
-      })
+			.then(({notes, folders}) => this.setState({notes, folders}))
 			.catch( networkError => {
 				this.setState({ networkError })
 			});
@@ -131,7 +127,6 @@ class App extends Component {
     }
 
 		shouldThrowNetworkError () {
-			console.log('logs network error', this.state.networkError);
 			if (this.state.networkError !== null) throw this.state.networkError;
 		}
 
@@ -140,7 +135,6 @@ class App extends Component {
 		}
 
     render() {
-			console.log('main rerender');
       const value = {
         notes: this.state.notes,
         folders: this.state.folders,

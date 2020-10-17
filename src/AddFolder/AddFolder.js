@@ -7,8 +7,9 @@ class AddFolder extends Component {
   static contextType = ApiContext
 
   state = {
-    title: { value: 'sample title' ,
-		touched: false
+    title: {
+			value: '' ,
+			touched: false
 		},
 		submitError: false
   }
@@ -28,37 +29,42 @@ class AddFolder extends Component {
 		return true;
 	}
 
+	submitIsValid() {
+		const title = Object.assign(this.state.title, {touched: true})
+		this.setState({title});
+		if (this.state.title.value.length > 0) return true;
+		return false;
+	}
+
+	onSubmit= e => {
+		const { addFolder } = this.context
+		e.preventDefault();
+		if (this.submitIsValid()) {
+			addFolder(this.state.title.value)
+			.then(success => {
+				if (!success) {
+					this.setState({ submitError: true });
+				} else {
+					this.props.history.goBack();
+				}
+			});
+		}
+	}
+
   render() {
-    const { addFolder } = this.context
-    const getErrors = this.getErrorMessage();
-
-
     return (
 		<form
       id='add-folder-form'
       className='Noteful-form'
-      onSubmit={e => {
-				e.preventDefault();
-				addFolder(this.state.title.value)
-				.then(success => {
-					if (!success) {
-						this.setState({ submitError: true });
-					} else {
-						this.props.history.goBack();
-					}
-				})
-			}
-			}
+      onSubmit={this.onSubmit}
     >
       <label htmlFor='folder-name-input'>New Folder Name:
-        {getErrors}
+        {this.getErrorMessage()}
       </label>
       <input type='text' name='folder-title' className='field' id='folder-name-input' onChange={e => {
-        console.log(e.target.value);
         this.setState({
           title: {value: e.target.value, touched: true}
-        })
-      }}/>
+        })}}/>
       <button type='submit' className='buttons'>Create Folder</button>
     </form>
   )

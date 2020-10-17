@@ -9,7 +9,6 @@ export default class NoteErrorBoundary extends React.Component {
 	}
 
 	render () {
-		console.trace();
 			if (this.state.error === true ) {
 				return (
 					<div className='NotePageMain'>

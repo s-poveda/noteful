@@ -54,7 +54,6 @@ export default class AddNote extends Component {
 			}
 			addNote(note)
 			.then( success =>{
-				console.log('swucc',success);
 				if (!success){
 					this.setState({ submitError: true })
 				} else {

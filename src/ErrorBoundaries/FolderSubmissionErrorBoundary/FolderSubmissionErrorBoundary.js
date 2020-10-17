@@ -24,7 +24,7 @@ export default class FolderSubmissionErrorBoundary extends React.Component {
 							<h2 className=''>
 							{this.props.message}
 							</h2>
-							<p>Return to the <a href='/'>Homescreen</a></p>
+							<p>Return to the <a className='to-homescreen' href='/'>Homescreen</a></p>
 					</div>
 				);
 			}

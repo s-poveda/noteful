@@ -3,6 +3,6 @@
 	padding: 16px
 }
 
-.App__main a {
+.App__main a.to-homescreen {
 	color: #bdbdbd;
 }

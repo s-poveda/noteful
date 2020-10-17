@@ -2,9 +2,6 @@ import React, { Component } from 'react'
 import './AddFolder.css'
 import ApiContext from '../ApiContext'
 
-import FolderSubmissionErrorBoundary from '../ErrorBoundaries/FolderSubmissionErrorBoundary/FolderSubmissionErrorBoundary';
-
-
 class AddFolder extends Component {
 
   static contextType = ApiContext
@@ -42,12 +39,14 @@ class AddFolder extends Component {
       className='Noteful-form'
       onSubmit={e => {
 				e.preventDefault();
-				const isValid = addFolder(this.state.title.value);
-				if ( !!isValid ) {
-					this.setState({ submitError: true })
-				} else {
-					this.props.history.goBack();
-				}
+				addFolder(this.state.title.value)
+				.then(success => {
+					if (!success) {
+						this.setState({ submitError: true });
+					} else {
+						this.props.history.goBack();
+					}
+				})
 			}
 			}
     >

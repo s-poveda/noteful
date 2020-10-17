@@ -20,13 +20,13 @@ export default class ApiErrorBoundary extends React.Component {
 					<nav className="App__nav"></nav>
 					<header className="App__header">
 							<h1>
-								<a href="/">Noteful</a>{' '}
+								<a className='to-homescreen' href="/">Noteful</a>{' '}
 								<FontAwesomeIcon icon="check-double" />
 							</h1>
 						</header>
 						<main className="App__main">
 							<h2>{this.props.message}</h2>
-							<p><a href='/'>Reload</a> the page</p>
+							<p><a className='to-homescreen' href='/'>Reload</a> the page</p>
 						</main>
 				</div>
 			);

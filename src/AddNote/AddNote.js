@@ -72,7 +72,6 @@ export default class AddNote extends Component {
 	}
 
 	render()  {
-		this.shouldThrowSubmitError();
 
 		const { folders } = this.context;
 		const [nameError, folderError] = [ this.getNameErrorMessage(), this.getFolderErrorMessage()]
@@ -81,18 +80,17 @@ export default class AddNote extends Component {
 	      className='Noteful-form'
 				onSubmit={this.onSubmit}
 			>
-			<button onClick={this.shouldThrowSubmitError} />
-
-			<label htmlFor='name-input'>Note Name:
-			{nameError}
-			</label>
+				<label htmlFor='name-input'>Note Name:
+				{nameError}
+				</label>
 				<input type='text' id='name-input'  onChange={ e=>this.setState({name:{value: e.target.value, touched: true} }) }/>
 
-			<label htmlFor='content'>Description:</label>
-			<textarea id='content' placeholder="(Optional)" onChange={ e=> this.setState({ content :{value: e.target.value}}) }></textarea>
+				<label htmlFor='content'>Description:</label>
+				<textarea id='content' placeholder="(Optional)" onChange={ e=> this.setState({ content :{value: e.target.value}}) }></textarea>
 
-			<label htmlFor='folder-selection'>Select Folder
-			{folderError}</label>
+				<label htmlFor='folder-selection'>Select Folder
+					{folderError}
+				</label>
 				<select id='folder-selection' onChange={ e=> this.setState({ folderIdIndex :{value: e.target.value, touched: true} }) }>
 					<option value=''>--- Select Folder ---</option>
 					{folders.map( (folder, i) =>

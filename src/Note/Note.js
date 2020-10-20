@@ -40,11 +40,15 @@ export default class Note extends React.Component {
       })
   }
 
+	shouldComponentUpdate(nextProps) {
+		if (nextProps === undefined ) {
+			throw new Error('invalid note info');
+		}
+		return true;
+	}
+
   render() {
     const { name, id, modified } = this.props
-	 	if ( !!name === false || !!id === false) {
-	 		throw new Error('invalid note info');
-	 }
     return (
       <div className='Note'>
         <h2 className='Note__title'>

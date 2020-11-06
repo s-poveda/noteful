@@ -37,8 +37,8 @@ class AddFolder extends Component {
 	}
 
 	onSubmit= e => {
-		const { addFolder } = this.context
 		e.preventDefault();
+		const { addFolder } = this.context
 		if (this.submitIsValid()) {
 			addFolder(this.state.title.value)
 			.then(success => {

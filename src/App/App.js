@@ -31,10 +31,18 @@ class App extends Component {
 			});
     }
 
-    handleDeleteNote = noteId => {
-        this.setState({
-            notes: this.state.notes.filter(note => note.id !== noteId)
-        });
+    handleDeleteNote = async noteId => {
+			// try {
+				api.deleteNote(noteId).then( ()=> {
+					this.setState({
+						notes: this.state.notes.filter(note => note.id !== noteId)
+					});
+				})
+			// }
+			 .catch((e)=> {
+				console.log(e);
+				throw new Error('Couldn\'t delete note');
+			})
     };
 
     //update local state with new note
@@ -47,10 +55,9 @@ class App extends Component {
 
     //compound function to call api and update local state with new note
     handleAddNote = note => {
-				note.id = cuid();
 				return api.addNote(note)
 				.then( res => {
-					this.updateStateOnAddNote(note);
+					this.updateStateOnAddNote(res);
 					return true;
 				})
 				.catch( e =>{
@@ -68,7 +75,7 @@ class App extends Component {
 
     //compound function to call api and update local state with new folder
     handleAddFolder = name => {
-        let folder = {name: name, id: cuid()};
+        let folder = {name};
         return api.addFolder(folder).then(res => {
           this.updateStateOnAddFolder(folder);
 					return true;

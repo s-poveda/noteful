@@ -50,7 +50,7 @@ export default class AddNote extends Component {
 			const note = {
 				name: name.value,
 				content: content.value,
-				folderId: folders[folderIdIndex.value].id
+				folder_id: folders[folderIdIndex.value].id
 			}
 			addNote(note)
 			.then( success =>{

@@ -40,7 +40,6 @@ class App extends Component {
 				})
 			// }
 			 .catch((e)=> {
-				console.log(e);
 				throw new Error('Couldn\'t delete note');
 			})
     };

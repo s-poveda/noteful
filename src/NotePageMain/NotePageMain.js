@@ -19,11 +19,10 @@ export default class NotePageMain extends React.Component {
   }
 
   render() {
-		console.log('ctx',this.context);
     const { notes=[] } = this.context
     const { noteId } = this.props.match.params
-		console.log(noteId);
-    const note = findNote(notes, noteId)// || { content: '' }
+    const note = findNote(notes, noteId)
+		if (!note) return null
     return (
       <section className='NotePageMain'>
 			<NoteErrorBoundary>

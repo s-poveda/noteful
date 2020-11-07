@@ -11,7 +11,6 @@ import AddNotePage from '../AddNote/AddNote';
 import FolderSubmissionErrorBoundary from '../ErrorBoundaries/FolderSubmissionErrorBoundary/FolderSubmissionErrorBoundary';
 import NoteSubmissionErrorBoundary from '../ErrorBoundaries/NoteSubmissionErrorBoundary/NoteSubmissionErrorBoundary';
 import api from '../api';
-import cuid from 'cuid';
 import './App.css';
 
 class App extends Component {
@@ -76,7 +75,7 @@ class App extends Component {
     handleAddFolder = name => {
         let folder = {name};
         return api.addFolder(folder).then(res => {
-          this.updateStateOnAddFolder(folder);
+          this.updateStateOnAddFolder(res);
 					return true;
         }).catch(er =>{
           return false;
